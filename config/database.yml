@@ -27,9 +27,6 @@ development:
 test:
   <<: *default
   database: west-chiba-gurume-map_test
-  host: <%= ENV.fetch("DB_HOST") { 'localhost' } %>
-  username: <%= ENV.fetch("DB_USERNAME") %>
-  password: <%= ENV.fetch("DB_PASSWORD") %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
