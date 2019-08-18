@@ -1,11 +1,11 @@
-version: '3'
+version: '2'
 services:
   db:
     image: mysql:5.7
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     ports:
-      - "4306:3306"
+      - "3306:3306"
     volumes:
       - datavol:/var/lib/mysql
   web:
