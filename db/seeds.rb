@@ -5,7 +5,7 @@ module Dbseed
     def target_tables(env: Rails.env)
       base = Dir.glob(Rails.root.join('db', 'seeds', '*.rb'))
       ext = Dir.glob(Rails.root.join('db', 'seeds', env, '*.rb'))
-      (base + ext).map { |f| File.basename(f, '.rb')}
+      (base + ext).map { |f| File.basename(f, '.rb') }
     end
 
     def lookup(table_name, env: Rails.env)
@@ -21,5 +21,4 @@ end
 pp Dbseed.target_tables
 Dbseed.target_tables.each do |table|
   pp Dbseed.lookup(table)
-
 end
