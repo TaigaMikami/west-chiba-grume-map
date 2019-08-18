@@ -8,7 +8,7 @@ RUN mkdir /west-chiba-gurume-map
 ENV APP_ROOT /west-chiba-gurume-map
 WORKDIR /west-chiba-gurume-map
 COPY ./Gemfile $APP_ROOT/Gemfile
-COPY ./Gemfile.lock $APP_ROOT/Gemfile.
+COPY ./Gemfile.lock $APP_ROOT/Gemfile.lock
 
 RUN bundle install
 CMD ["rails", "server", "-b", "0.0.0.0"]
