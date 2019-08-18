@@ -5,49 +5,28 @@
 version: 2.1
 jobs:
   build:
-    docker:
-      - image: circleci/ruby:2.6.3-node-browsers
-        environment:
-          RAILS_ENV: test
-          BUNDLE_PATH: vendor/bundle
-          DB_HOST: 127.0.0.1
-          DB_USERNAME: 'root'
-          DB_PASSWORD: ''
-
-      - image: circleci/mysql:5.7
-
-    working_directory: ~/west-chiba-gurume-map
-
+    machine:
+      image: circleci/classic:edge
     steps:
       - checkout
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - restore_cache:
-          keys:
-            - rails-demo-{{ checksum "Gemfile.lock" }}
-            - rails-demo-
+          name: docker-compose build
+          command: docker-compose build
       - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+          name: docker-compose up
+          command: docker-compose up -d
       - run:
-          name: Install mysql-client
-          command: |
-            sudo apt update
-            sudo apt-get install default-mysql-client
-      - save_cache:
-          key: rails-demo-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+          name: sleep for waiting launch db
+          command: sleep 1
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+          name: "before_test: setup db"
+          command: docker-compose run web rails db:create db:migrate
       - run:
-          name: Rubocop
-          command: bundle exec rubocop
+          name: rubocop
+          command: docker-compose run web rubocop
       - run:
-          name: Rspec
-          command: bundle exec rspec
+          name: rspec
+          command: docker-compose run web rspec
+      - run:
+          name: docker-compose down
+          command: docker-compose down
