@@ -1,7 +1,24 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# frozen_string_literal: true
+
+module Dbseed
+  class << self
+    def target_tables(env: Rails.env)
+      base = Dir.glob(Rails.root.join('db', 'seeds', '*.rb'))
+      ext = Dir.glob(Rails.root.join('db', 'seeds', env, '*.rb'))
+      (base + ext).map { |f| File.basename(f, '.rb') }
+    end
+
+    def lookup(table_name, env: Rails.env)
+      base = Rails.root.join('db', 'seeds')
+      ext = Rails.root.join('db', 'seeds', env)
+      [base, ext].select { |dir| dir.join("#{table_name}.rb").file? }.each do |dir|
+        require dir.join(table_name)
+      end
+    end
+  end
+end
+
+pp Dbseed.target_tables
+Dbseed.target_tables.each do |table|
+  pp Dbseed.lookup(table)
+end
