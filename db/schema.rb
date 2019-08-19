@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2019_08_08_165113) do
 
-  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "shops", force: :cascade do |t|
     t.string "name", null: false, comment: "お店の名前"
     t.string "address", null: false, comment: "住所"
     t.float "lat", null: false, comment: "緯度"
