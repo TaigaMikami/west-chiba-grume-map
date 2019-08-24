@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Shop < ApplicationRecord
-  has_one :food_category
+  belongs_to :food_category
 
   validates :name, presence: true
   validates :address, presence: true
