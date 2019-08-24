@@ -1,4 +1,5 @@
 # west-chiba-gurume-map-api
+[![CircleCI](https://circleci.com/gh/TaigaMikami/west-chiba-grume-map-api/tree/develop.svg?style=svg)](https://circleci.com/gh/TaigaMikami/west-chiba-grume-map-api/tree/develop)
 
 # setup
 ```
