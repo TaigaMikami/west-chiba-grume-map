@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_165113) do
+ActiveRecord::Schema.define(version: 2019_08_24_163007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "food_categories", force: :cascade do |t|
+    t.string "name", null: false, comment: "食べ物のカテゴリー"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "shops", force: :cascade do |t|
     t.string "name", null: false, comment: "お店の名前"
@@ -23,6 +29,9 @@ ActiveRecord::Schema.define(version: 2019_08_08_165113) do
     t.text "description", comment: "お店の説明"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "food_category_id"
+    t.index ["food_category_id"], name: "index_shops_on_food_category_id"
   end
 
+  add_foreign_key "shops", "food_categories"
 end
