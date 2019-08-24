@@ -2,7 +2,6 @@
 
 shops = JSON.parse(File.read(File.join(File.dirname(__FILE__), 'data', 'shops.json')))
 pp shops
-puts 'hoge'
 
 shops.each do |shop|
   shop_names = Shop.pluck(:name)
